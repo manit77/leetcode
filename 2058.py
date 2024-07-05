@@ -103,6 +103,7 @@ class Solution(object):
         # print ("*** min_diff", min_diff, "max_diff", max_diff)
         return [min_diff, max_diff]
 
+# run tests
 ll = LinkedList()
 ll.appendAll([3,1])
 ll.appendAll([5,3,1,2,5,1,2])
