@@ -17,9 +17,9 @@ A node is a local minima if the current node has a value strictly smaller than t
 
 Note that a node can only be a local maxima/minima if there exists both a previous node and a next node.
 
-Given a linked list head, return an array of length 2 containing [minDistance, maxDistance] where minDistance is 
-the minimum distance between any two distinct critical points and maxDistance is the maximum distance between any 
-two distinct critical points. 
+Given a linked list head, return an array of length 2 containing [minDistance, maxDistance] where minDistance is
+the minimum distance between any two distinct critical points and maxDistance is the maximum distance between any
+two distinct critical points.
 
 If there are fewer than two critical points, return [-1, -1].
 
@@ -91,20 +91,15 @@ class Solution(object):
         # for i in range(len(critical_points)):
         #    print("crit point", critical_points[i])
 
-        # loop through the crit points and check all possible differences
+       # loop through the crit points and check all possible differences
+       # loop at 0 and 1
         for i in range(len(critical_points)):
-            # print ("i", i, critical_points[i])
-            for j in range(len(critical_points)):
-                # do not check same index
-                if i != j:
-                    # get the min value using min
-                    min_v = min(critical_points[i], critical_points[j])
-                    # get the max value using max
-                    max_v = max(critical_points[i], critical_points[j])
-                    diff = max_v - min_v
+            for j in range(i + 1, len(critical_points)):               
+                # print((critical_points[i], critical_points[j]))
+                diff = critical_points[j] - critical_points[i]
 
-                    # get the min and max value in each iteration
-                    min_diff = min(min_diff, diff)
+                # get the min and max value in each iteration
+                min_diff = min(min_diff, diff)
 
         # print ("*** min_diff", min_diff, "max_diff", max_diff)
         return [min_diff, max_diff]
