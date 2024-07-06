@@ -23,11 +23,14 @@ two distinct critical points.
 
 If there are fewer than two critical points, return [-1, -1].
 
-"""    
+"""
+
+
 class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
 
 class LinkedList:
     def __init__(self):
@@ -42,33 +45,34 @@ class LinkedList:
         while last_node.next:
             last_node = last_node.next
         last_node.next = new_node
-    
-    def appendAll(self, arr: list):      
-      for val in arr:
-        self.append(val)
-     
+
+    def appendAll(self, arr: list):
+        for val in arr:
+            self.append(val)
+
+
 class Solution(object):
     def nodesBetweenCriticalPoints(self, head: ListNode):
-        
+
         critical_points = []
-        prev = None # set previous to None
+        prev = None  # set previous to None
         curr = head  # set curr to first node
         idx = 1
 
-        #iterate through the list node
+        # iterate through the list node
         while curr:
-            print(curr.val)
+            # print(curr.val)
             # if you have a current and next value
             if prev and curr.next:
                 # check for min, max
-                if (curr.val > prev.val and curr.val > curr.next.val):              
+                if (curr.val > prev.val and curr.val > curr.next.val):
                     critical_points.append(idx)
-                elif (curr.val < prev.val and curr.val < curr.next.val):               
+                elif (curr.val < prev.val and curr.val < curr.next.val):
                     critical_points.append(idx)
             # increment the index
-            idx+=1
+            idx += 1
             prev = curr
-            curr = curr.next    
+            curr = curr.next
 
         # check for requirement
         if len(critical_points) < 2:
@@ -76,40 +80,63 @@ class Solution(object):
 
         # set min and max to max values, we will for min an max
         min_diff = float('inf')
-        max_diff = float('-inf')
         min_v = 0
         max_v = 0
-       
-        # debug your crit points 
+
+        # max diff will always be the first - the last
+        max_diff = critical_points[len(
+            critical_points) - 1] - critical_points[0]
+
+        # debug your crit points
+        # for i in range(len(critical_points)):
+        #    print("crit point", critical_points[i])
+
+        # loop through the crit points and check all possible differences
         for i in range(len(critical_points)):
-            print("crit point", critical_points[i])
-        
-        # loop through the crit points and check all possible differences            
-        for i in range(len(critical_points)):
-            print ("i", i, critical_points[i])
+            # print ("i", i, critical_points[i])
             for j in range(len(critical_points)):
                 # do not check same index
-                if i != j :
+                if i != j:
                     # get the min value using min
                     min_v = min(critical_points[i], critical_points[j])
                     # get the max value using max
-                    max_v = max(critical_points[i], critical_points[j])                    
+                    max_v = max(critical_points[i], critical_points[j])
                     diff = max_v - min_v
-                    
+
                     # get the min and max value in each iteration
                     min_diff = min(min_diff, diff)
-                    max_diff = max(max_diff, diff)
-        
+
         # print ("*** min_diff", min_diff, "max_diff", max_diff)
         return [min_diff, max_diff]
 
+    def checkResults(self, expected, result):
+        for i in range(len(expected)):
+            if expected[i] != result[i]:
+                print("test result failed, expected",
+                      expected, " but got", result)
+                return False
+
+        print("test result passed, expected", expected, " and got ", result)
+        return True
+
+
 # run tests
+sol = Solution()
+
 ll = LinkedList()
-ll.appendAll([3,1])
-ll.appendAll([5,3,1,2,5,1,2])
-ll.appendAll([1,3,2,2,3,2,2,2,7])
+ll.appendAll([3, 1])
+result = sol.nodesBetweenCriticalPoints(ll.head)
+expected = [-1, -1]
+sol.checkResults(expected, result)
 
-result = Solution().nodesBetweenCriticalPoints(ll.head)
-print(result)
+ll = LinkedList()
+ll.appendAll([5, 3, 1, 2, 5, 1, 2])
+result = sol.nodesBetweenCriticalPoints(ll.head)
+expected = [1, 3]
+sol.checkResults(expected, result)
 
-
+ll = LinkedList()
+ll.appendAll([1, 3, 2, 2, 3, 2, 2, 2, 7])
+result = sol.nodesBetweenCriticalPoints(ll.head)
+expected = [3, 3]
+sol.checkResults(expected, result)
