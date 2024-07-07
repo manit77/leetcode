@@ -58,15 +58,14 @@ class Solution(object):
         #     print(c[0], c[1])
 
         # generate the return string
-        
-        # rv = ""        
+
+        # rv = ""
         # for (key, value) in sorted_chars:
         #     print (key, value)
         #     rv = rv + (key * value)
-        
-        #simplified from above    
+
+        # simplified from above
         rv = "".join((key * value) for (key, value) in sorted_chars)
-            
 
         print(rv)
 
